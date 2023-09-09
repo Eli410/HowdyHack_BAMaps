@@ -24,10 +24,17 @@
     <div id="map" style="width: 600px; height: 400px;"></div>
     <script>
         var map = L.map('map').setView([30.61219313946475, -96.34153357537045], 13);
-
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
+
         }).addTo(map);
+
+        const reed_arena_1 = L.marker([30.60563, -96.347412]).addTo(map).bindPopup("<b>Reed Arena</b><br>Route 1").openPopup();
+
+        
+
+        
     </script>
 </body>
 </html>
