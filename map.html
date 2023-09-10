@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="header">
+         
+         <nav>  
+            <img src = "/images/logo.png" class = "logo2">
+            <ul class="nav-links">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Contact Us</a></li>
+            </ul>
+         </nav>
+    </div>
+    
+    <br><br><br><br><br><br><br>
+    
+    <div id="map" style="width: 600px; height: 400px;"></div>
+    <button id="getloc">Get My Location</button>
+
+
+
+
+
+
+
+
+    
+    <script>
+        var map = L.map('map').setView([30.61219313946475, -96.34153357537045], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var userLat;
+        var userLng;
+
+        function getMyLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    userLat = position.coords.latitude;
+                    userLng = position.coords.longitude;
+
+                    map.setView([userLat, userLng], 13);
+
+                    L.marker([userLat, userLng]).addTo(map)
+                        .bindPopup("Your Location").openPopup();
+
+                    getClostestStop([userLat, userLng]);
+                });
+            } else {
+                alert("Geolocation is not available in your browser.");
+            }
+        }
+
+        document.getElementById("getloc").addEventListener("click", getMyLocation);
+
+        function findClosest(inCoord, coordList) {
+            let minDistance = Infinity;
+            let closestPoint = null;
+
+            for (let coord of coordList) {
+                const distance = Math.sqrt(Math.pow(inCoord[0] - coord[0], 2) + Math.pow(inCoord[1] - coord[1], 2));
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestPoint = coord;
+                }
+            }
+
+            return closestPoint;
+        }
+
+        function getClostestStop(inputCoords) {
+            const filePath = 'stops.csv';
+
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n');
+                    let list = [];
+
+                    for (let i = 1; i < rows.length; i++) {
+                        const element = rows[i].split(',');
+                        list.push([parseFloat(element[1]), parseFloat(element[2])]);
+                    }
+
+                    const closestPoint = findClosest(inputCoords, list);
+                    L.marker(closestPoint).addTo(map).bindPopup("Closest Bus Stop").openPopup();
+                })
+                .catch(error => {
+                    console.error(`An error occurred: ${error.message}`);
+                });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
