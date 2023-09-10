@@ -53,10 +53,9 @@ function findIntendedStop(id_num){
   const coord_list=readCsv('stops.csv')
   for(let i = 1; i < coord_list.length;i++){
     if(coord_list[i][0] == id_num){
-      return [coord_list[i][1],coord_list[i][2]]
+      return coord_list[i];
     
     }
   }
   return null;
 }
-
