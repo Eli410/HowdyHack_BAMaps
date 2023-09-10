@@ -39,4 +39,4 @@ function findClosest(inCoord, coordList) {
   
     return findClosest(inputCoords, list);
   }
-  
+

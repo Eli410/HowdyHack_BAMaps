@@ -13,7 +13,7 @@
          <nav>  
             <img src = "/images/logo.png" class = "logo2">
             <ul class="nav-links">
-                    <li><a href="">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="">Contact Us</a></li>
             </ul>
          </nav>
@@ -31,7 +31,7 @@
 
 
 
-    
+
     <script>
         var map = L.map('map').setView([30.61219313946475, -96.34153357537045], 13);
         
@@ -39,8 +39,16 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        var userLat;
-        var userLng;
+        var busIcon = L.icon({
+            iconUrl: 'images/bus.png',
+
+            iconSize:     [20, 20], // size of the icon
+            shadowSize:   [0, 0], // size of the shadow
+            iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+            shadowAnchor: [0, 0],  // the same for the shadow
+            popupAnchor:  [0, -10] // point from which the popup should open relative to the iconAnchor
+        });
+
 
         function getMyLocation() {
             if ("geolocation" in navigator) {
@@ -51,7 +59,7 @@
                     map.setView([userLat, userLng], 13);
 
                     L.marker([userLat, userLng]).addTo(map)
-                        .bindPopup("Your Location").openPopup();
+                        .bindPopup("Your Location");
 
                     getClostestStop([userLat, userLng]);
                 });
@@ -61,19 +69,33 @@
         }
 
         document.getElementById("getloc").addEventListener("click", getMyLocation);
+        
+        // function findClosest(inCoord, coordList) {
+        //     let minDistance = Infinity;
+        //     let closestPoint = null;
 
+        //     for (let coord of coordList) {
+        //         const distance = Math.sqrt(Math.pow(inCoord[0] - coord[0], 2) + Math.pow(inCoord[1] - coord[1], 2));
+        //         if (distance < minDistance) {
+        //             minDistance = distance;
+        //             closestPoint = coord;
+        //         }
+        //     }
+
+        //     return closestPoint;
+        // }
         function findClosest(inCoord, coordList) {
             let minDistance = Infinity;
             let closestPoint = null;
-
+        
             for (let coord of coordList) {
-                const distance = Math.sqrt(Math.pow(inCoord[0] - coord[0], 2) + Math.pow(inCoord[1] - coord[1], 2));
+                const distance = Math.sqrt(Math.pow(inCoord[0] - coord[1], 2) + Math.pow(inCoord[1] - coord[2], 2));
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestPoint = coord;
                 }
             }
-
+        
             return closestPoint;
         }
 
@@ -88,11 +110,12 @@
 
                     for (let i = 1; i < rows.length; i++) {
                         const element = rows[i].split(',');
-                        list.push([parseFloat(element[1]), parseFloat(element[2])]);
+                        list.push(element);
                     }
 
                     const closestPoint = findClosest(inputCoords, list);
-                    L.marker(closestPoint).addTo(map).bindPopup("Closest Bus Stop").openPopup();
+                    console.log(closestPoint)
+                    L.marker([closestPoint[1],closestPoint[2]],{icon: busIcon}).addTo(map).bindPopup("<b>Closest Bus Stop</b>"+"<br>Route "+closestPoint[4]+"<br>"+closestPoint[5]).openPopup();
                 })
                 .catch(error => {
                     console.error(`An error occurred: ${error.message}`);
