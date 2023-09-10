@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaflet Map</title>
+    <link href="map.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
@@ -14,14 +15,15 @@
             <img src = "/images/logo.png" class = "logo2">
             <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="">Contact Us</a></li>
+                    <li><a href="map.html">Map</a></li>
             </ul>
          </nav>
     </div>
     
-    
-    <button id="getloc">Get My Location</button>
-    <div id="map" style="width: 1260px; height: 400px;"></div>
+    <br>
+    <div><button id="getloc" >Get My Location</button></div>
+    <br>
+    <div id="map" style="width: 100%; height: 400px;"></div>
 
 
 
@@ -63,7 +65,7 @@
 
                     map.setView([userLat, userLng], 13);
 
-                    L.marker([userLat, userLng]).addTo(map)
+                    locationMarker=L.marker([userLat, userLng]).addTo(map)
                         .bindPopup("Your Location");
 
                     getClostestStop([userLat, userLng]);
@@ -161,7 +163,5 @@
     </script>
 </body>
 </html>
-
-
 
 

@@ -79,6 +79,7 @@ nav {
 .mainbody {
     width: 100%;
     text-align: center;
+
 }
 
 .img-info {
@@ -87,7 +88,7 @@ nav {
 
 .img-info h1 {
     padding: 30px 30px 20px;
-    font-size: 50px;
+    font-size: 30px;
     line-height: 44px;
 }
 
@@ -95,10 +96,6 @@ nav {
     padding: 0px 30px 20px;
     font-size: 16px;
     line-height: 24px;
-}
-
-.mainimg {
-    width: 100%;
 }
 
 
@@ -110,6 +107,7 @@ nav {
     }
     .mainbody {
         text-align:center;
+        width:100%;
     }
 
     .but1{
@@ -119,11 +117,11 @@ nav {
         font-weight: 700;
         padding: 25px;
         width: 160px;
-        font-size:23px;
+        font-size:13px;
     }
 
-    .logo{
-        width:100px;
+    .logo2{
+        width:150px;
     }
 
     .img-info h1 {
@@ -140,7 +138,7 @@ nav {
         display:flex;
         align-items: center;
         justify-content: space-between;
-        width: 95%;
+        width: 97%;
     }
 }
 
@@ -151,9 +149,11 @@ nav {
         width: 100%;
         padding-bottom: 30px;
         display:block;
+        
     }
     .mainbody {
         text-align:center;
+        width:100%;
     }
 
     .img-info h1 {
@@ -170,7 +170,7 @@ nav {
         display:flex;
         align-items: center;
         justify-content: space-between;
-        width: 95%;
+        width: 97%;
     }
 
     .but1{
@@ -180,8 +180,11 @@ nav {
         font-weight: 700;
         padding: 25px;
         width: 160px;
-        font-size:23px;
+        font-size:18px;
     }
 }
+
+
+
 
 

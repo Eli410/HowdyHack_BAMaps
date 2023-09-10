@@ -1,116 +1,203 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    background-color: azure;
-    font-family: verdana;
+html, body {
+    background-color:azure;
+    font-family:verdana;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#getloc{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 50px;
+    font-weight: 700;
+    padding: 25px;
+    width: 100%;
+    font-size:23px;
+    transition: background-color 0.3s, color 0.3s;
+    display:flex;
+    justify-content: center;
+    align-items: center;   
 }
 
 .header {
     height: 20%;
     width: 100%;
-    padding: 20px;
-    background-color: azure;
-    box-shadow: 0px 10px 20px 5px azure;
+    padding: 30px 30px 20px;
+    background-color:azure;
+    box-shadow: 0px 20px 40px 10px azure;
+}
+
+a {
+    text-decoration:none;
+    outline: none;
+    color:inherit;
+    width:300px;
+}
+
+#getloc:hover{
+    
+    border-style:outset;
+    background-color:rgb(0,0,0);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    
+    
 }
 
 nav {
-    display: flex;
+    display:flex;
     align-items: center;
+    text-align:center;
     justify-content: space-between;
     width: 95%;
-    margin: 0 auto;
 }
 
 .logo2 {
-    max-width: 100%;
+     width: 250px;
 }
 
 .nav-links {
-    padding: 20px 0;
-    list-style: none;
+    padding: 28px 0;
 }
 
 .nav-links li {
-    display: inline-block;
-    margin: 0 15px;
+   display: inline-block; 
+   margin: 0 15px;
 }
 
-.nav-links li a {
+.nav-links li a{
     text-decoration: none;
     padding: 5px 0;
 }
 
-#getloc {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    border-radius: 50px;
-    font-weight: 700;
-    padding: 20px;
-    width: 200px;
-    font-size: 18px;
-    transition: background-color 0.3s, color 0.3s;
+.mainbody {
+    width: 100%;
+    text-align: center;
+    height:100vh;
 }
 
-#getloc:hover {
-    border-style: outset;
-    background-color: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
-    cursor: pointer;
+.img-info {
+    width:100%;
 }
 
-@media only screen and (max-width: 768px) {
-    .header {
-        padding: 10px;
-    }
-
-    .nav-links {
-        padding: 10px 0;
-    }
-
-    .nav-links li {
-        margin: 0 10px;
-    }
-
-    .logo2 {
-        max-width: 80%;
-    }
-
-    #getloc {
-        padding: 15px;
-        width: 150px;
-        font-size: 16px;
-    }
+#map {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.img-info h1 {
+    padding: 30px 30px 20px;
+    font-size: 50px;
+    line-height: 44px;
+}
+
+.img-info p1 {
+    padding: 0px 30px 20px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+
 
 @media only screen and (max-width: 425px) {
     .header {
-        padding: 5px;
+        width: 100%;
+        padding-bottom: 30px;
+        display:block;
+    }
+    .mainbody {
+        text-align:center;
     }
 
-    .nav-links {
-        padding: 5px 0;
+    #getloc{
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border-radius: 50px;
+        font-weight: 700;
+        padding: 25px;
+        width: 100%;
+        font-size:23px;
+        transition: background-color 0.3s, color 0.3s;
+        justify-content: center;
+        align-items: center;   
+    }
+    
+
+    .logo{
+        width:100px;
     }
 
-    .nav-links li {
-        margin: 0 5px;
+    .img-info h1 {
+        padding: 20px 0px 0px;
     }
-
-    .logo2 {
-        max-width: 60%;
+    
+    .img-info p1 {
+        padding: 20px 0px 0px;
     }
-
-    #getloc {
-        padding: 10px;
-        width: 120px;
-        font-size: 14px;
+    .mainimg {
+        padding-top: 30px;
+    }
+    nav {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
     }
 }
 
 
 
+@media only screen and (max-width: 768px) {
+    .header {
+        width: 100%;
+        padding-bottom: 30px;
+        display:block;
+    }
+    .mainbody {
+        text-align:center;
+    }
+
+    .img-info h1 {
+        padding: 20px 0px 0px;
+    }
+    
+    .img-info p1 {
+        padding: 20px 0px 0px;
+    }
+    .mainimg {
+        padding-top: 30px;
+    }
+    nav {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+    }
+
+    #getloc{
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border-radius: 50px;
+        font-weight: 700;
+        padding: 25px;
+        width: 100%;
+        font-size:23px;
+        transition: background-color 0.3s, color 0.3s;
+        display:flex;
+        justify-content: center;
+        align-items: center;   
+    }
+    
+}
 
 
