@@ -1,3 +1,25 @@
+function readCsv(filename){
+  const fs = require('fs');
+  let list=[];
+  try {
+    const fileData = fs.readFileSync(filename, 'utf8');
+    const rows = fileData.split('\n');
+    
+    for (let i = 1; i < rows.length; i++) {
+      const elements=rows[i].split(',')
+      list.push(elements)
+    }
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.error(`The file '${filename}' was not found.`);
+    } else {
+      console.error(`An error occurred: ${error.message}`);
+    }
+  }
+
+  return list;
+}
+
 
 
 function findClosest(inCoord, coordList) {
@@ -15,44 +37,28 @@ function findClosest(inCoord, coordList) {
   return closestPoint;
 }
 
-const fs = require('fs');
-
 function getClostestStop(inputCoords) {
-  const filePath='stops.csv';
-  let list=[];
-  try {
-    const fileData = fs.readFileSync(filePath, 'utf8');
-    const rows = fileData.split('\n');
-    
-    for (let i = 1; i < rows.length; i++) {
-      const element=rows[i].split(',')
-      list.push([element[1],element[2]])
-    }
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      console.error(`The file '${filePath}' was not found.`);
-    } else {
-      console.error(`An error occurred: ${error.message}`);
-    }
+  const busStops=readCsv('stops.csv')
+
+  let list=[]
+
+  for(let row of busStops){
+    list.push([Number(row[1]),Number(row[2])])
   }
 
   return findClosest(inputCoords, list)
 }
 
-function findIntendedStop(coord_list,stop_name,bus_number){
+function findIntendedStop(stop_name,bus_number){
+  const coord_list=readCsv('stops.csv')
   for(let i = 1; i < coord_list.length;i++){
     if(coord_list[i][3] == stop_name){
       if(coord_list[i][4] == bus_number){
-        return coord_list[i][1], coord_list[i][2]
+        return [coord_list[i][1], coord_list[i][2]]
       }
-    }
-    else{
-      console.log("Bus stop not found")
+    
     }
   }
+  return null;
 }
-
-// Example usage:
-const filePath = 'stops.csv'; // Replace with the path to your CSV file
-console.log(getClostestStop([30.565267, -96.296772]));
 
