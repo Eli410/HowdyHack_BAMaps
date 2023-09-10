@@ -19,10 +19,10 @@
          </nav>
     </div>
     
-    <br><br><br><br><br><br><br>
     
-    <div id="map" style="width: 600px; height: 400px;"></div>
     <button id="getloc">Get My Location</button>
+    <div id="map" style="width: 1260px; height: 400px;"></div>
+
 
 
 
@@ -34,7 +34,8 @@
 
     <script>
         var map = L.map('map').setView([30.61219313946475, -96.34153357537045], 13);
-        
+        document.getElementById('map').style.cursor = 'crosshair'
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
@@ -51,6 +52,10 @@
 
 
         function getMyLocation() {
+            if (stopMarker!=null)
+                stopMarker.remove();
+            if(locationMarker!=null)
+                locationMarker.remove();
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     userLat = position.coords.latitude;
@@ -69,21 +74,52 @@
         }
 
         document.getElementById("getloc").addEventListener("click", getMyLocation);
-        
-        // function findClosest(inCoord, coordList) {
-        //     let minDistance = Infinity;
-        //     let closestPoint = null;
+       
+        var stopMarker, locationMarker;
+        map.on('click', function(e){
+        var coord = e.latlng;
+        var lat = coord.lat;
+        var lng = coord.lng;
+        if (stopMarker!=null)
+            stopMarker.remove();
+        if(locationMarker!=null)
+            locationMarker.remove();
+        locationMarker=L.marker([lat, lng]).addTo(map)
+            .bindPopup("Your Location");
+        getClostestStop([lat,lng]);
+        });
 
-        //     for (let coord of coordList) {
-        //         const distance = Math.sqrt(Math.pow(inCoord[0] - coord[0], 2) + Math.pow(inCoord[1] - coord[1], 2));
-        //         if (distance < minDistance) {
-        //             minDistance = distance;
-        //             closestPoint = coord;
-        //         }
-        //     }
+        function haversineDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371.0; // Radius of the Earth in kilometers
+            const toRadians = angle => angle * (Math.PI / 180);
 
-        //     return closestPoint;
-        // }
+            lat1 = toRadians(lat1);
+            lon1 = toRadians(lon1);
+            lat2 = toRadians(lat2);
+            lon2 = toRadians(lon2);
+
+            const dlat = lat2 - lat1;
+            const dlon = lon2 - lon1;
+
+            const a = Math.sin(dlat / 2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2)**2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return ((R * c)/1.609).toFixed(2);
+        }
+        function getGoogleMapsLink(lat,long) {
+            let directionUrl = `https://www.google.com/maps/search/${lat}+${long}`;
+            return `<a href="${directionUrl}" target="_blank" rel="noopener noreferrer">Get direction</a>`;
+        }
+
+        function getTamuBusLink(routeNum){
+            if (routeNum.includes('/')) {
+                routeNum=routeNum.replace(/\//g, '-');
+            }
+            let url='https://transport.tamu.edu/busroutes.web/Routes?r='+routeNum;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer">View bus time and live updates</a>`;
+
+        }
+
         function findClosest(inCoord, coordList) {
             let minDistance = Infinity;
             let closestPoint = null;
@@ -113,9 +149,10 @@
                         list.push(element);
                     }
 
-                    const closestPoint = findClosest(inputCoords, list);
-                    console.log(closestPoint)
-                    L.marker([closestPoint[1],closestPoint[2]],{icon: busIcon}).addTo(map).bindPopup("<b>Closest Bus Stop</b>"+"<br>Route "+closestPoint[4]+"<br>"+closestPoint[5]).openPopup();
+                    let closestPoint = findClosest(inputCoords, list);
+                    let googleMapLink='https://www.google.com/maps/search/'+closestPoint[1]+'+'+closestPoint[2]
+                    stopMarker=L.marker([closestPoint[1],closestPoint[2]],{icon: busIcon}).addTo(map).bindPopup("<b>Closest Bus Stop</b>"+"<br>Route "+closestPoint[4]+"<br>"+closestPoint[5]+' - '+closestPoint[3]+'<br>'+'Distance: '+haversineDistance(inputCoords[0],inputCoords[1],closestPoint[1],closestPoint[2])+' miles'+'<br>'+getGoogleMapsLink(closestPoint[1],closestPoint[2])+'<br>'+getTamuBusLink(closestPoint[4])).openPopup();
+                    // document.getElementById('directionLink').href = googleMapLink;
                 })
                 .catch(error => {
                     console.error(`An error occurred: ${error.message}`);
