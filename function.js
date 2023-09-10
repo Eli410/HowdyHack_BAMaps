@@ -49,13 +49,11 @@ function getClostestStop(inputCoords) {
   return findClosest(inputCoords, list)
 }
 
-function findIntendedStop(stop_name,bus_number){
+function findIntendedStop(id_num){
   const coord_list=readCsv('stops.csv')
   for(let i = 1; i < coord_list.length;i++){
-    if(coord_list[i][3] == stop_name){
-      if(coord_list[i][4] == bus_number){
-        return [coord_list[i][1], coord_list[i][2]]
-      }
+    if(coord_list[i][0] == id_num){
+      return [coord_list[i][1],coord_list[i][2]]
     
     }
   }
