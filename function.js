@@ -40,7 +40,3 @@ function findClosest(inCoord, coordList) {
     return findClosest(inputCoords, list);
   }
   
-  
-  // Example usage:
-  const filePath = 'stops.csv'; // Replace with the path to your CSV file
-  console.log(getClostestStop([30.565267, -96.296772]));
