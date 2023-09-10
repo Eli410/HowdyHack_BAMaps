@@ -39,7 +39,20 @@ function getClostestStop(inputCoords) {
   return findClosest(inputCoords, list)
 }
 
+function findIntendedStop(coord_list,stop_name,bus_number){
+  for(let i = 1; i < coord_list.length;i++){
+    if(coord_list[i][3] == stop_name){
+      if(coord_list[i][4] == bus_number){
+        return coord_list[i][1], coord_list[i][2]
+      }
+    }
+    else{
+      console.log("Bus stop not found")
+    }
+  }
+}
 
 // Example usage:
 const filePath = 'stops.csv'; // Replace with the path to your CSV file
 console.log(getClostestStop([30.565267, -96.296772]));
+
