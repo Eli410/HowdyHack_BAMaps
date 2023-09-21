@@ -1,3 +1,4 @@
+//esablished main function
 function findClosest(inCoord, coordList) {
   let minDistance = Infinity;
   let closestPoint = null;
